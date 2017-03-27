@@ -1,27 +1,15 @@
-# 
--
+#  整理
 ### [图标素材下载站](http://www.iconfont.cn/)
 
-SVG图标  动画方式展现 超级漂亮   https://github.com/mcxtzhang/PathAnimView   
-                        参考   http://blog.csdn.net/zxt0601/article/details/54018970
-                        
-                       
-                        
-google登录 实现  http://www.cnblogs.com/zhaoyanjun/p/5337442.html
-                http://www.codeceo.com/article/android-app-google-login.html
-                
-                
-google 推送服务  http://justalkcloud.com/cn/docs/gitbook/account/PushNotificationIntegration/GCM/readme.html
+### [SVG图标动画](https://github.com/mcxtzhang/PathAnimView)
 
-        PHP加Android端实现 https://github.com/rcmlee99/Android-Push-Notifications-using-Google-Cloud-Messaging-GCM-PHP-and-MySQL
-                          https://github.com/thanksandroid/GCM-Demo
-                          https://github.com/MathiasBerwig/Push
-                          
-                          
-备选极光推送(海外支持)  友盟统计(海外支持)  
-第三方推送 Pushwoosh  参考  http://www.jianshu.com/p/313b8efdd1fd
+### [google登录](http://www.cnblogs.com/zhaoyanjun/p/5337442.html)
 
-一个漂亮的动画效果  https://github.com/airbnb/lottie-android
+### [google 推送服务](http://justalkcloud.com/cn/docs/gitbook/account/PushNotificationIntegration/GCM/readme.html)
+
+### [漂亮的动画 ios&android ](https://github.com/airbnb/lottie-android)
        
-### google Play Billing 
-    http://leenjewel.github.io/blog/2014/11/21/google-play-in-app-billing-cai-guo-de-na-xie-keng/
+### [google Play Billing 应用内支付](http://leenjewel.github.io/blog/2014/11/21/google-play-in-app-billing-cai-guo-de-na-xie-keng/)
+- [google Play Billing 应用内支付](http://leenjewel.github.io/blog/2016/06/21/google-zhi-fu-cong-ru-men-dao-tiao-keng/)
+
+    
