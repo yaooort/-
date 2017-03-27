@@ -1,7 +1,6 @@
 # 
 -
-
-图标下载网站 http://www.iconfont.cn/
+(http://www.iconfont.cn/ "图标素材下载站")
 
 SVG图标  动画方式展现 超级漂亮   https://github.com/mcxtzhang/PathAnimView   
                         参考   http://blog.csdn.net/zxt0601/article/details/54018970
@@ -24,3 +23,5 @@ google 推送服务  http://justalkcloud.com/cn/docs/gitbook/account/PushNotific
 
 一个漂亮的动画效果  https://github.com/airbnb/lottie-android
        
+### google Play Billing 
+    http://leenjewel.github.io/blog/2014/11/21/google-play-in-app-billing-cai-guo-de-na-xie-keng/
