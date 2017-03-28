@@ -19,3 +19,7 @@
 ---------------
 ### PayPal支付
 - [Android集成PayPal](http://www.jianshu.com/p/7a064f2fbfa0)
+- [Android相关1](http://blog.csdn.net/ivinm/article/details/51508547)
+- [Android相关2](http://www.cnblogs.com/Fredric-2013/p/4608473.html)
+- [iOS](http://www.jianshu.com/p/812d9f010b5b)
+- [iOS Paypal详细](http://www.devzhang.com/14664047663795.html)
