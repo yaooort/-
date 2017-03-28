@@ -15,6 +15,7 @@
 ### google Play Billing 应用内支付
 - [踩坑](http://leenjewel.github.io/blog/2014/11/21/google-play-in-app-billing-cai-guo-de-na-xie-keng/)
 - [跳坑](http://leenjewel.github.io/blog/2016/06/21/google-zhi-fu-cong-ru-men-dao-tiao-keng/)
+
 [========]
 ### PayPal支付
 - [Android集成PayPal](http://www.jianshu.com/p/7a064f2fbfa0)
