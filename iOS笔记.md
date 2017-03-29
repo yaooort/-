@@ -6,3 +6,4 @@
 - [字典转模型](https://github.com/CoderMJLee/MJExtension)
 - [图片加圆角](https://github.com/liuzhiyi1992/ZYCornerRadius)
 - [网络请求](https://github.com/AFNetworking/AFNetworking)
+- [图片加载](https://github.com/rs/SDWebImage)
