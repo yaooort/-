@@ -27,3 +27,6 @@
 - [Android相关2](http://www.cnblogs.com/Fredric-2013/p/4608473.html)
 - [iOS](http://www.jianshu.com/p/812d9f010b5b)
 - [iOS Paypal详细](http://www.devzhang.com/14664047663795.html)
+### 粒子动画效果
+- [Android粒子动画](https://github.com/glomadrian/Grav)
+- [ios参考](http://www.jianshu.com/p/4b6d60755dd3)
