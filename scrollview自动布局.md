@@ -1,3 +1,11 @@
+### iOS 自动布局管理scrollview
+
+- 个人整理笔记，包含软键盘动态关闭
+
+
+
+
+
 ```objective-c
 #define MAS_SHORTHAND
 #define MAS_SHORTHAND_GLOBALS
