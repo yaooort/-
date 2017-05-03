@@ -1,6 +1,6 @@
 ### iOS 自动布局管理scrollview
 
-- 个人整理笔记，包含软键盘动态关闭
+- 个人整理笔记，包含完美软键盘弹出视图
 
 
 
@@ -17,6 +17,7 @@
 
 #import "ViewController.h"
 #import "Masonry.h"
+
 @interface ViewController ()<UITextFieldDelegate,UIScrollViewDelegate>
 
 @property(nonatomic,strong) UIScrollView *mainScroll;
@@ -25,9 +26,9 @@
 
 @property(nonatomic,strong) UIView *countView;
 
-@property(nonatomic,assign) BOOL keyBoardlsVisible;
+//@property(nonatomic,assign) BOOL keyBoardlsVisible;
 
-@property(nonatomic,assign) CGFloat jianfa;
+@property(nonatomic,assign) CGFloat insetBottom;
 @end
 
 @implementation ViewController
@@ -37,8 +38,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //  给 _keyBoardlsVisible 赋初值
-    _keyBoardlsVisible = NO;
-    self.jianfa = 0;
+    //    _keyBoardlsVisible = NO;
+    self.insetBottom = 0;
     
     self.mainScroll = [UIScrollView new];
     [self.mainScroll setBackgroundColor:[UIColor whiteColor]];
@@ -50,44 +51,44 @@
     
     
 #pragma mark--包含-个View的布局方式
-//    self.countView = [[UIView alloc] init];
-//    self.countView.backgroundColor = [UIColor greenColor];
-//    [self.mainScroll addSubview:self.countView];
-//    
-//    [self.countView makeConstraints:^(MASConstraintMaker *make) {
-          //这句其实是指定view填充contentSize
-//        make.edges.equalTo(self.mainScroll);
-          //确定宽度等于滚动条宽度，也是确定contentSize宽度的关键
-//        make.width.equalTo(self.mainScroll);
-//    }];
-      //由于上面没有指定contentSize高度，此时无法确定滚动高度
-//    
-//    UIImageView *imageView1 = [UIImageView new];
-//    [imageView1 setBackgroundColor:RandColor];
-//    [self.countView addSubview:imageView1];
-//    [imageView1 makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.countView).offset(20);
-//        make.left.right.mas_equalTo(self.countView);
-//        make.height.mas_equalTo(900);
-//    }];
-//    
-//    UIImageView *imageView2 = [UIImageView new];
-//    [imageView2 setBackgroundColor:RandColor];
-//    [self.countView addSubview:imageView2];
-//    [imageView2 makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(imageView1.bottom).offset(20);
-//        make.left.right.mas_equalTo(self.countView);
-//        make.height.mas_equalTo(900);
-//    }];
-//    
-//    //当视图高度大于屏幕的时候scrollView就可以滚动，设置宽度的方法相同
-//    [self.countView updateConstraints:^(MASConstraintMaker *make) {
-//        // 设置容器视图的底部与要显示的子控件的底部相同，不然scrollView不能滚动
-//        make.bottom.equalTo(imageView2);
-//    }];
+    //    self.countView = [[UIView alloc] init];
+    //    self.countView.backgroundColor = [UIColor greenColor];
+    //    [self.mainScroll addSubview:self.countView];
+    //
+    //    [self.countView makeConstraints:^(MASConstraintMaker *make) {
+    //这句其实是指定view填充contentSize
+    //        make.edges.equalTo(self.mainScroll);
+    //确定宽度等于滚动条宽度，也是确定contentSize宽度的关键
+    //        make.width.equalTo(self.mainScroll);
+    //    }];
+    //由于上面没有指定contentSize高度，此时无法确定滚动高度
+    //
+    //    UIImageView *imageView1 = [UIImageView new];
+    //    [imageView1 setBackgroundColor:RandColor];
+    //    [self.countView addSubview:imageView1];
+    //    [imageView1 makeConstraints:^(MASConstraintMaker *make) {
+    //        make.top.equalTo(self.countView).offset(20);
+    //        make.left.right.mas_equalTo(self.countView);
+    //        make.height.mas_equalTo(900);
+    //    }];
+    //
+    //    UIImageView *imageView2 = [UIImageView new];
+    //    [imageView2 setBackgroundColor:RandColor];
+    //    [self.countView addSubview:imageView2];
+    //    [imageView2 makeConstraints:^(MASConstraintMaker *make) {
+    //        make.top.equalTo(imageView1.bottom).offset(20);
+    //        make.left.right.mas_equalTo(self.countView);
+    //        make.height.mas_equalTo(900);
+    //    }];
+    //
+    //    //当视图高度大于屏幕的时候scrollView就可以滚动，设置宽度的方法相同
+    //    [self.countView updateConstraints:^(MASConstraintMaker *make) {
+    //        // 设置容器视图的底部与要显示的子控件的底部相同，不然scrollView不能滚动
+    //        make.bottom.equalTo(imageView2);
+    //    }];
     
 #pragma mark--包含多个View的布局方式
-    for (int i=0; i<30; i++) {
+    for (int i=0; i<40; i++) {
         UITextField *textF = [UITextField new];
         textF.delegate = self;//设置代理
         textF.backgroundColor = RandColor;
@@ -102,14 +103,14 @@
             //高度写死
             make.height.equalTo(40);
         }];
-        if(i==29){
+        if(i==39){
             //到最后一个View时候更新scollerView的contentSize高度也就是底部最多延伸到哪里
-           [self.mainScroll updateConstraints:^(MASConstraintMaker *make) {
-               make.bottom.equalTo(textF.bottom);
-           }];
+            [self.mainScroll updateConstraints:^(MASConstraintMaker *make) {
+                make.bottom.equalTo(textF.bottom);
+            }];
         }
     }
-
+    
     
     
     // 注册键盘通知
@@ -134,9 +135,9 @@
     
     // 获取键盘基本信息（动画时长与键盘高度）
     NSDictionary *userInfo = [notification userInfo];
-    CGRect rect = [userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+    CGRect rect = [userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGFloat keyboardHeight   = CGRectGetHeight(rect);
-//    CGFloat keyboardDuration = [userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    CGFloat keyboardDuration = [userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     //获得当前输入框的Y坐标
     CGFloat inputY = self.textField.frame.origin.y+self.textField.frame.size.height;
     //滑动距离
@@ -144,32 +145,29 @@
     //输入框距离屏幕底部
     CGFloat inputJd = self.view.frame.size.height-(inputY-offsetY);
     
-    if(inputJd<keyboardHeight&&!_keyBoardlsVisible){
-        self.jianfa = keyboardHeight-inputJd;
-        [self.mainScroll setContentOffset:CGPointMake(0, offsetY+self.jianfa) animated:YES];
+    NSLog(@"键盘高度==%f,输入框距离底部距离==%f",keyboardHeight,inputJd);
+    if(inputJd<keyboardHeight){
+        self.insetBottom = keyboardHeight-inputJd;
+        // 更新滚动条
+        [UIView animateWithDuration:keyboardDuration animations:^{
+            [self.mainScroll setContentOffset:CGPointMake(0, offsetY+self.insetBottom) animated:YES];
+        }];
     }
-//    // 更新约束
-//    [UIView animateWithDuration:keyboardDuration animations:^{
-//        [self.view layoutIfNeeded];
-//    }];
-    _keyBoardlsVisible =YES;
 }
 #pragma mark--键盘隐藏
 - (void)keyboardWillHideNotification:(NSNotification *)notification {
     
     // 获得键盘动画时长
-//    NSDictionary *userInfo   = [notification userInfo];
-//    CGFloat keyboardDuration = [userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    NSDictionary *userInfo   = [notification userInfo];
+    CGFloat keyboardDuration = [userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     //滑动距离
     CGFloat offsetY = self.mainScroll.contentOffset.y;
-    [self.mainScroll setContentOffset:CGPointMake(0, offsetY-self.jianfa) animated:YES];
-    self.jianfa = 0;
-
-//    // 更新约束
-//    [UIView animateWithDuration:keyboardDuration animations:^{
-//        [self.view layoutIfNeeded];
-//    }];
-    _keyBoardlsVisible =NO;
+    // 更新滚动条
+    [UIView animateWithDuration:keyboardDuration animations:^{
+        [self.mainScroll setContentOffset:CGPointMake(0, offsetY-self.insetBottom) animated:YES];
+    }];
+    self.insetBottom = 0;
+    
 }
 #pragma mark--触摸事件
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -186,5 +184,6 @@
 }
 
 @end
+
 
 ```
