@@ -53,3 +53,7 @@
 
 [相片选择器](https://github.com/zhihu/Matisse)
 
+### ios
+
+[扫描库](https://github.com/MxABC/LBXScan)
+
