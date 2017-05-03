@@ -143,7 +143,7 @@
     //滑动距离
     CGFloat offsetY = self.mainScroll.contentOffset.y;
     //输入框距离屏幕底部
-    CGFloat inputJd = self.view.frame.size.height-(inputY-offsetY);
+    CGFloat inputJd = self.mainScroll.frame.size.height-(inputY-offsetY);
     
     NSLog(@"键盘高度==%f,输入框距离底部距离==%f",keyboardHeight,inputJd);
     if(inputJd<keyboardHeight){
