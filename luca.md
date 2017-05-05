@@ -20,6 +20,8 @@
 - [iOS应用内付费(IAP)提交审核一波三折](http://www.jianshu.com/p/8af97aac5e6c)
 - [应用内支付IAP全部流程](http://www.jianshu.com/p/e9ae4cece800)
 - [iOS应用内支付（IAP）详解](http://www.jianshu.com/p/033086546126)
+- [iOS内购](http://www.jianshu.com/p/321efc31078d)
+- [详细版](http://www.jianshu.com/p/847edcb1488e)
 ---------------
 ### PayPal支付
 - [Android集成PayPal](http://www.jianshu.com/p/7a064f2fbfa0)
