@@ -53,6 +53,14 @@
 
 [相片选择器](https://github.com/zhihu/Matisse)
 
+[侧滑菜单](https://github.com/mzule/FantasySlide)
+
+[浮动按钮实现侧滑](https://github.com/andremion/Floating-Navigation-View)
+
+[底部弹出菜单](https://github.com/zzz40500/AndroidSweetSheet)
+
+[全屏高斯模糊菜单](https://github.com/gotokatsuya/BlurredGridMenu)
+
 ### ios
 
 [扫描库](https://github.com/MxABC/LBXScan)
