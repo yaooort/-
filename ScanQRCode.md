@@ -57,3 +57,7 @@
 
 [扫描库](https://github.com/MxABC/LBXScan)
 
+### 二维码生成
+
+[包含swift java js](https://github.com/SumiMakito/AwesomeQRCode)
+
