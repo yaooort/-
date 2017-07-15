@@ -32,3 +32,35 @@
 ### 粒子动画效果
 - [Android粒子动画](https://github.com/glomadrian/Grav)
 - [ios参考](http://www.jianshu.com/p/4b6d60755dd3)
+### Android动画
+-[Android动画封装](https://github.com/florent37/ViewAnimator)
+
+-android luca问问动画
+```java
+ textView.setText("你好，欢迎使用");
+        ViewAnimator.animate(textView)
+                .translationX(0, -width1)
+                .duration(1000)
+                .alpha(1, 0)
+                .onStop(new AnimationListener.Stop() {
+                    @Override
+                    public void onStop() {
+                        textView.setText("感谢您的回复");
+                        ViewAnimator.animate(textView)
+                                .translationX(width1, 0)
+                                .alpha(0, 1)
+                                .onStart(new AnimationListener.Start() {
+                                    @Override
+                                    public void onStart() {
+                                        ViewAnimator.animate(view)
+                                                .dp().width(px2dip(MainActivity.this, width1 / 3), px2dip(MainActivity.this, width1 / 3 * 2))
+                                                .duration(2000)
+                                                .start();
+                                    }
+                                })
+                                .duration(1000)
+                                .start();
+                    }
+                })
+                .start();
+```
