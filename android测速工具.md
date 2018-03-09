@@ -1,3 +1,5 @@
+# 直接上代码
+
 ```java
 public class ListDomainSort {
     //域名测速
@@ -211,7 +213,7 @@ public class ListDomainSort {
     }
 }
 ```
-###使用方式
+# 使用方式
 ```java
         ArrayList<String> list = new ArrayList<>();
         list.add("http://www.amns7s.com");
