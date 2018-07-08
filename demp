@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form name="myform">
+    <input type="text" name="name" id="nn"/>
+    <input type="button" name="button" value="获取" onclick="print()"/>
+</form>
+<p id="demo">我的第一个段落</p>
+<script>
+    function print() {
+        var a = myform.name.value;
+        go(a);
+    }
+
+    go(19);
+
+    function go(a) {
+        let page = a;
+        let pages = 100;
+        let show_page_num = 8;
+        let show_top_num = 1;
+        let page_arr = [];
+        page_arr.push(show_top_num);
+        //当page<8-2 显示第一页也就是下标从2开始
+        //当page
+        let start = (Math.floor(page / show_page_num) * show_page_num) > 0 ? (Math.floor(page / show_page_num) * show_page_num) : show_top_num + 1;
+        let end = (Math.floor(page / show_page_num) + 1) * show_page_num > show_page_num ? (Math.floor(page / show_page_num) + 1) * show_page_num : show_page_num + show_top_num + 1;
+        for (let i = start; i <= end; i++) {
+            page_arr.push(i)
+        }
+        document.getElementById("demo").innerHTML = page_arr.join();
+    }
+
+</script>
+</body>
+</html>
