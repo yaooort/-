@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<style>
+    pre {
+        outline: 1px solid #ccc;
+        padding: 5px;
+        margin: 5px;
+    }
+
+    .string {
+        color: green;
+    }
+
+    .number {
+        color: darkorange;
+    }
+
+    .boolean {
+        color: blue;
+    }
+
+    .null {
+        color: magenta;
+    }
+
+    .key {
+        color: red;
+    }
+</style>
+<body>
+<div id="app"></div>
+<script>
+    Vue.prototype.$axios = axios
+    var App = {
+        data () {
+            return {
+                post: 'http://0.0.0.0:1992/admin/super/logout',
+                request: {
+                    package_name: 'android',
+                    token: 'b8dw2r549u758jau254aaf9405bd35d2'
+                },
+                html: ''
+            }
+        },
+        template: `
+                <div style="position: absolute;width: 100%;height: 100%;left: 0;top: 0;">
+                    <button @click = 'startRequestPost' style="align-content: center;background: dodgerblue;color: aliceblue;font-size: 12px">POST请求--->{{post}}</button>
+                    <pre id="result" v-html="html"></pre>
+                </div>
+            `,
+        methods: {
+            startRequestPost () {
+                this.$axios.post(this.post, this.request)
+                    .then((response) => {
+                        console.log(response.data)
+                        this.html = this.syntaxHighlight(response)
+                    }).catch((response) => {
+                    console.log(response)
+                    this.html = response.toString()
+                })
+            },
+            syntaxHighlight (json) {
+                if (typeof json != 'string') {
+                    json = JSON.stringify(json, undefined, 2)
+                }
+                json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>')
+                return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                    var cls = 'number'
+                    if (/^"/.test(match)) {
+                        if (/:$/.test(match)) {
+                            cls = 'key'
+                        } else {
+                            cls = 'string'
+                        }
+                    } else if (/true|false/.test(match)) {
+                        cls = 'boolean'
+                    } else if (/null/.test(match)) {
+                        cls = 'null'
+                    }
+                    return '<span class="' + cls + '">' + match + '</span>'
+                })
+            }
+        }
+    }
+
+    new Vue({
+        el: '#app',
+        components: {
+            App
+        },
+        template: `
+                <App />
+            `
+    })
+    // Vue.use(axios);
+</script>
+</body>
+
+</html>
