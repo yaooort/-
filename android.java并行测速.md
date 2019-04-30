@@ -1,7 +1,7 @@
 # 直接上代码
 
 ```java
-mport com.lzy.okgo.https.HttpsUtils;
+import com.lzy.okgo.https.HttpsUtils;
 
 import net.moonjoy.firstroom.utils.common.sickle.L;
 import net.moonjoy.firstroom.utils.common.utils.HandlerUtil;
