@@ -144,3 +144,7 @@ vi /usr/bin/yum
 vi /usr/libexec/urlgrabber-ext-down 
 把 #! /usr/bin/python 修改为 #! /usr/bin/python2
 ```
+### 安装pipenv
+```
+pip3.7 install pipenv
+```
