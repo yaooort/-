@@ -146,5 +146,5 @@ vi /usr/libexec/urlgrabber-ext-down
 ```
 ### 安装pipenv
 ```
-pip3.7 install pipenv
+pip install pipenv
 ```
