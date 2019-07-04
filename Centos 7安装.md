@@ -307,3 +307,10 @@ kill -9 XXX
 
 ##### 使用redis desktop manager远程连接redis
 
+
+
+
+# clone 代码
+进入python 项目目录
+pipenv shell
+pipenv install
