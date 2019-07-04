@@ -148,3 +148,7 @@ vi /usr/libexec/urlgrabber-ext-down
 ```
 pip install pipenv
 ```
+### 安装git
+```
+yum install git
+```
