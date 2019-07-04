@@ -246,3 +246,57 @@ flush privileges
 
 官方表示 MySQL 8 要比 MySQL 5.7 快 `2` 倍，还带来了大量的改进和更快的性能！所以我也是第一时间把[我的网站](https://www.plaza4me.com/)的mysql数据库从5.7升级到了8.0版本。
 有些大神已经总结了8.0的诸多好处，我就不多赘述了。
+
+# 安装redis
+
+yum -y install redis
+
+- 启动redis
+service redis start
+- 停止redis
+service redis stop
+- 查看redis运行状态
+service redis status
+- 查看redis进程
+ps -ef | grep redis
+
+### 设置redis为开机自动启动
+chkconfig redis on
+
+### 进入redis服务
+##### 进入本机redis
+redis-cli
+##### 列出所有key
+keys *
+
+## 防火墙开放相应端口
+- 开启6379
+/sbin/iptables -I INPUT -p tcp --dport 6379 -j ACCEPT
+- 开启6380
+/sbin/iptables -I INPUT -p tcp --dport 6380 -j ACCEPT
+- 保存
+/etc/rc.d/init.d/iptables save
+- centos 7下执行
+service iptables save
+
+## 修改redis默认端口和密码
+##### 打开配置文件
+vi /etc/redis.conf
+##### 修改默认端口，查找 port 6379 修改为相应端口即可
+##### 修改默认密码，查找 requirepass foobared 将 foobared 修改为你的密码
+##### 使用配置文件启动 redis
+redis-server /etc/redis.conf &
+##### 使用端口登录
+redis-cli -h 127.0.0.1 -p 6179
+##### 此时再输入命令则会报错
+##### 输入刚才输入的密码
+auth 111
+##### 停止redis
+redis-cli -h 127.0.0.1 -p 6179
+shutdown
+##### 使用进程ID杀死
+ps -ef | grep redis
+kill -9 XXX
+
+##### 使用redis desktop manager远程连接redis
+
