@@ -252,14 +252,21 @@ flush privileges
 yum -y install redis
 
 - 启动redis
+```
 service redis start
+```
 - 停止redis
+```
 service redis stop
+```
 - 查看redis运行状态
+```
 service redis status
+```
 - 查看redis进程
+```
 ps -ef | grep redis
-
+```
 ### 设置redis为开机自动启动
 chkconfig redis on
 
