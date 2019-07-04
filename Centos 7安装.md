@@ -152,3 +152,97 @@ pip install pipenv
 ```
 yum install git
 ```
+# centos7安装mysql8.0版本教程
+
+# 一、下载mysql yum包
+
+官方下载地址:https://dev.mysql.com/downloads/repo/yum/
+或者直接使用wget下载
+
+```
+wget https://repo.mysql.com//mysql80-community-release-el7-1.noarch.rpm
+```
+
+# 二、安装软件源
+
+```
+rpm -Uvh https://repo.mysql.com//mysql80-community-release-el7-1.noarch.rpm
+```
+
+# 三、安装mysql
+
+```
+yum install mysql-community-server
+```
+
+安装过程中如果出现y/n的话就一直y就行了，如果嫌麻烦可以用这个命令来安装
+
+```
+yum install -y mysql-community-server
+```
+
+# 四、启动&配置
+
+```
+#启动
+service mysqld start
+#查看运行状态
+service mysqld status
+```
+
+看到绿色的running代表已经启动成功，然后mysql在5.6之后的版本都会默认生成一个默认密码，是root用户的。通过如下命令查看密码
+
+```
+grep 'temporary password' /var/log/mysqld.log
+```
+
+用粉色框标识出来的便是默认设置的密码
+
+
+
+![img](https://upload-images.jianshu.io/upload_images/5433505-3b18e2b9d2fbded9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/757/format/webp)
+
+查看密码.png
+
+# 五、进入mysql
+
+执行完如下命令之后输入默认密码
+
+```
+mysql -u root -p
+```
+修改root密码
+```
+alter user 'root'@'localhost' identified by '密码';
+```
+刷新
+```
+flush privileges;
+```
+
+
+# 六、创建用户和分配权限
+
+由于mysql8新提供了一种密码加密方式caching-sha2-password，且为默认，目前很多客户端都不支持，所以我们在创建新角色用户的时候可以指定其为mysql_native_password，原来的root账户等不去做任何改变(`无形之中增加了安全性有木有`)
+
+```
+#创建一个test用户(一般情况下root用户只在本地环境下使用),密码是29dIg;2^，数据库的密码最好设置得连自己都记不住。
+CREATE USER 'test'@'%' IDENTIFIED WITH mysql_native_password BY '29dIg;2^';
+#授权数据库给用户，并设置所有ip都可以远程连接
+#如果只授予用户某些数据库的话就把*.*改成 数据库名称.*  意思就是 数据库.表
+#如果只授予用户某些权限的话，比如只能读不能写，就把GRANT ALL改成GRANT SELECT
+GRANT ALL ON *.* TO 'test'@'%';
+#当然，你也可以撤销授权,用法和授权几乎都是一样的。
+REVOKE ALL ON *.* from 'test'@'%'; 
+```
+
+最后使设置立即生效
+
+```
+flush privileges
+```
+
+# 七、总结
+
+官方表示 MySQL 8 要比 MySQL 5.7 快 `2` 倍，还带来了大量的改进和更快的性能！所以我也是第一时间把[我的网站](https://www.plaza4me.com/)的mysql数据库从5.7升级到了8.0版本。
+有些大神已经总结了8.0的诸多好处，我就不多赘述了。
