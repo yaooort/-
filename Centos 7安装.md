@@ -351,3 +351,8 @@ kill -9 XXX
 进入python 项目目录
 pipenv shell
 pipenv install
+
+# 拷贝文件
+```
+scp /Users/yao/Desktop/6-11.zip  root@103.117.132.61:/usr/share/nginx/html/static
+```
