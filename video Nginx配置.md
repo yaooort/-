@@ -56,32 +56,12 @@ server
     listen 1992;
     charset utf-8;
     client_max_body_size 75M;
-    location /static {
-       alias /home/app/video/static;
-    }
 
     root /home/app/video;
     location / {
         include uwsgi_params;
         uwsgi_pass 127.0.0.1:9090;
     }
-
-    #error_page 500 502 503 504 /50x.html;
-    #location = /50x.html {
-    #    root html;
-    #}
-location /admin {
-            try_files $uri $uri/ @router;#需要指向下面的@router否则会出现vue的路
-由在nginx中刷新出现404
-            index  index.html index.htm;
-                    }
-        #对应上面的@router，主要原因是路由的路径资源并不是一个真实的路径，所以无
-法找到具体的文件
-        #因此需要rewrite到index.html中，然后交给路由在处理请求资源
-        location @router {
-            rewrite ^.*$ /index.html last;
-        }
-
 }
 ```
 ### vue后台管理
