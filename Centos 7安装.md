@@ -445,6 +445,38 @@ $ supervisorctl restart celery_touchscan
 $ supervisorctl reread
 $ supervisorctl update
 ```
+### 二、设置开机启动supervisor
+
+新建开机启动服务
+
+> $ vim /lib/systemd/system/supervisord.service
+
+在supervisord.service中添加以下内容：
+
+> \# supervisord service for systemd (CentOS 7.0+)
+> \# by ET-CS (https://github.com/ET-CS)
+> [Unit]
+> Description=Supervisor daemon[Service]
+> Type=forking
+> ExecStart=/usr/bin/supervisord
+> ExecStop=/usr/bin/supervisorctl $OPTIONS shutdown
+> ExecReload=/usr/bin/supervisorctl $OPTIONS reload
+> KillMode=process
+> Restart=on-failure
+> RestartSec=42s[Install]
+> WantedBy=multi-user.target
+
+修改/etc/supervisord.conf配置文件：
+
+> \#vim /etc/supervisrod.conf
+> nodaemon=false 改成true
+
+将服务脚本添加到systemctl自启动服务：
+
+> $ systemctl enable supervisord.service
+
+重启系统测试开机启动。
+
 
 ### nginx启动可以，不能访问
 - 错误 nginx connect() to 0.0.0.0:8888 failed (13: Permission denied) while connecting to upstream
