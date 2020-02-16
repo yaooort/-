@@ -402,11 +402,11 @@ ps -aux | grep supervisord
 #### 配置Program
 ```
 ;program名称，随便写，但不要重复，是program的唯一标识
-[program:celery_touchscan]
+[program:app_flask]
 ;指定运行目录
-directory=/root/TouchScanV2/ 
+directory=/home/app/filemanage/ 
 ;运行目录下执行命令
-command=celery -A scan worker --queue=touchscan --pidfile="./log/pid.txt" --logfile="./log/scan.log" -c 10
+command=/root/.local/share/virtualenvs/filemanage-dx6nPVOX/bin/gunicorn -c gun.py wsgi:application
 ;进程名称
 process_name=%(program_name)s_%(process_num)02d
 ;启动设置
