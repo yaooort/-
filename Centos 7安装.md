@@ -453,3 +453,6 @@ setsebool -P httpd_can_network_connect 1
 ```
 ### nginx无法启动端口
 - https://blog.csdn.net/RunSnail2018/article/details/81185138
+
+### nginx 访问文件权限
+https://blog.csdn.net/onlysunnyboy/article/details/75270533
