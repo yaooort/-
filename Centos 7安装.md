@@ -356,3 +356,94 @@ pipenv install
 ```
 scp /Users/yao/Desktop/6-11.zip  root@103.117.132.61:/usr/share/nginx/html/static
 ```
+
+# 安装Supervisord
+pip install supervisor
+
+#### 生成配置文件
+echo_supervisord_conf > supervisord.conf
+#### 该命令在当前目录下创建了一个文件名为supervisord.conf的配置文件，编辑配置文件
+```
+[unix_http_server]
+file=/tmp/supervisor.sock   ; UNIX socket 文件，supervisorctl 会使用
+;chmod=0700                 ; socket 文件的 mode，默认是 0700
+;chown=nobody:nogroup       ; socket 文件的 owner，格式： uid:gid
+;[inet_http_server]         ; HTTP 服务器，提供 web 管理界面
+;port=127.0.0.1:9001        ; Web 管理后台运行的 IP 和端口，如果开放到公网，需要注意安全性
+;username=user              ; 登录管理后台的用户名
+;password=123               ; 登录管理后台的密码
+[supervisord]
+logfile=/tmp/supervisord.log ; 日志文件，默认是 $CWD/supervisord.log
+logfile_maxbytes=50MB        ; 日志文件大小，超出会 rotate，默认 50MB
+logfile_backups=10           ; 日志文件保留备份数量默认 10
+loglevel=info                ; 日志级别，默认 info，其它: debug,warn,trace
+pidfile=/tmp/supervisord.pid ; pid 文件
+nodaemon=false               ; 是否在前台启动，默认是 false，即以 daemon 的方式启动
+minfds=1024                  ; 可以打开的文件描述符的最小值，默认 1024
+minprocs=200                 ; 可以打开的进程数的最小值，默认 200
+; the below section must remain in the config file for RPC
+; (supervisorctl/web interface) to work, additional interfaces may be
+; added by defining them in separate rpcinterface: sections
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
+[supervisorctl]
+serverurl=unix:///tmp/supervisor.sock ; 通过 UNIX socket 连接 supervisord，路径与 unix_http_server 部分的 file 一致
+;serverurl=http://127.0.0.1:9001 ; 通过 HTTP 的方式连接 supervisord
+; 包含其他的配置文件
+[include]
+files = relative/directory/*.ini    ; 可以是 *.conf 或 *.ini
+```
+#### 运行以下命令启动supervisord进程，可测试supervisord是否安装成功并执行
+supervisord -c supervisord.conf
+
+#### 查看系统进程中是否多了一个supervisord
+ps -aux | grep supervisord
+
+#### 配置Program
+```
+;program名称，随便写，但不要重复，是program的唯一标识
+[program:celery_touchscan]
+;指定运行目录
+directory=/root/TouchScanV2/ 
+;运行目录下执行命令
+command=celery -A scan worker --queue=touchscan --pidfile="./log/pid.txt" --logfile="./log/scan.log" -c 10
+;进程名称
+process_name=%(program_name)s_%(process_num)02d
+;启动设置
+numprocs=1         ;进程数，注意：（celery进程数量,不是work数量，相当于执行了10个command命令，而不是在celery中指定-c 为10）
+autostart=true      ;当supervisor启动时,程序将会自动启动
+autorestart=true    ;自动重启（当work被kill了之后会重新启动）
+stopasgroup=true
+killasgroup=true
+;运行程序的用户
+;user=root
+;startsecs=1 ;程序重启时候停留在runing状态的秒数
+;startretries=10 ;启动失败时的最多重试次数
+;停止信号,默认TERM
+;中断:INT (类似于Ctrl+C)(kill -INT pid)，退出后会将写文件或日志(推荐)
+;终止:TERM (kill -TERM pid)
+;挂起:HUP (kill -HUP pid),注意与Ctrl+Z/kill -stop pid不同
+;从容停止:QUIT (kill -QUIT pid)
+stopsignal=INT
+```
+#### 重启supervisord进程：
+supervisorctl -c supervisord.conf reload
+
+### supervisord命令行操作
+##### 启动supervisord进程
+`supervisord -c supervisord.conf`
+##### 关闭supervisord进程
+`supervisorctl -c supervisord.conf shutdown #注意这里将supervisord进程关闭，但通过supervisord启动的进程没有关闭`
+##### 重启supervisord进程
+`supervisorctl -c supervisord.conf reload`
+##### 查看进程状态
+`supervisorctl`
+##### 更多supervisorctl命令
+```
+$ supervisorctl status
+$ supervisorctl stop celery_touchscan # celery_touchscan是一个program的名称
+$ supervisorctl start celery_touchscan
+$ supervisorctl restart celery_touchscan
+$ supervisorctl reread
+$ supervisorctl update
+```
