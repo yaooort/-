@@ -452,19 +452,21 @@ $ supervisorctl update
 > $ vim /lib/systemd/system/supervisord.service
 
 在supervisord.service中添加以下内容：
+```
+# supervisord service for systemd (CentOS 7.0+)
+# by ET-CS (https://github.com/ET-CS)
+[Unit]
+Description=Supervisor daemon[Service]
+Type=forking
+ExecStart=/usr/bin/supervisord
+ExecStop=/usr/bin/supervisorctl $OPTIONS shutdown
+ExecReload=/usr/bin/supervisorctl $OPTIONS reload
+KillMode=process
+Restart=on-failure
+RestartSec=42s[Install]
+WantedBy=multi-user.target
+```
 
-> \# supervisord service for systemd (CentOS 7.0+)
-> \# by ET-CS (https://github.com/ET-CS)
-> [Unit]
-> Description=Supervisor daemon[Service]
-> Type=forking
-> ExecStart=/usr/bin/supervisord
-> ExecStop=/usr/bin/supervisorctl $OPTIONS shutdown
-> ExecReload=/usr/bin/supervisorctl $OPTIONS reload
-> KillMode=process
-> Restart=on-failure
-> RestartSec=42s[Install]
-> WantedBy=multi-user.target
 
 修改/etc/supervisord.conf配置文件：
 
