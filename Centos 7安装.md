@@ -402,19 +402,17 @@ ps -aux | grep supervisord
 #### 配置Program
 ```
 ;program名称，随便写，但不要重复，是program的唯一标识
-[program:app_flask]
+[program:server]
 ;指定运行目录
-directory=/home/app/filemanage/ 
+directory = /home/app/filemanage/
 ;运行目录下执行命令
-command=/root/.local/share/virtualenvs/filemanage-dx6nPVOX/bin/gunicorn -c gun.py wsgi:application
-;进程名称
-process_name=%(program_name)s_%(process_num)02d
+command = /root/.local/share/virtualenvs/filemanage-dx6nPVOX/bin/gunicorn -c gun.py wsgi:application
 ;启动设置
-numprocs=1         ;进程数，注意：（celery进程数量,不是work数量，相当于执行了10个command命令，而不是在celery中指定-c 为10）
-autostart=true      ;当supervisor启动时,程序将会自动启动
-autorestart=true    ;自动重启（当work被kill了之后会重新启动）
-stopasgroup=true
-killasgroup=true
+;numprocs=1         ;进程数，注意：（celery进程数量,不是work数量，相当于执行了10个command命令，而不是在celery中指定-c 为10）
+autostart = true      ;当supervisor启动时,程序将会自动启动
+autorestart = true    ;自动重启（当work被kill了之后会重新启动）
+stopasgroup = true
+killasgroup = true
 ;运行程序的用户
 ;user=root
 ;startsecs=1 ;程序重启时候停留在runing状态的秒数
@@ -424,7 +422,7 @@ killasgroup=true
 ;终止:TERM (kill -TERM pid)
 ;挂起:HUP (kill -HUP pid),注意与Ctrl+Z/kill -stop pid不同
 ;从容停止:QUIT (kill -QUIT pid)
-stopsignal=INT
+stopsignal = INT
 ```
 #### 重启supervisord进程：
 supervisorctl -c supervisord.conf reload
@@ -447,3 +445,11 @@ $ supervisorctl restart celery_touchscan
 $ supervisorctl reread
 $ supervisorctl update
 ```
+
+### nginx启动可以，不能访问
+- 错误 nginx connect() to 0.0.0.0:8888 failed (13: Permission denied) while connecting to upstream
+```
+setsebool -P httpd_can_network_connect 1
+```
+### nginx无法启动端口
+- https://blog.csdn.net/RunSnail2018/article/details/81185138
