@@ -185,6 +185,10 @@ vi /usr/libexec/urlgrabber-ext-down
 ```
 pip install pipenv
 ```
+### 遇到错误ERROR: Package 'setuptools' requires a different Python: 2.7.5 not in '>=3.5'
+```
+pip install --upgrade 'setuptools<45.0.0'
+```
 ### 安装git
 ```
 yum install git
