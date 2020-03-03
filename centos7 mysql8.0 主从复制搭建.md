@@ -161,6 +161,14 @@ start SLAVE SQL_THREAD;
 
 
 
+### 修改同步速度
+`show variables like '%slave_parallel%'`
 
+```sql
+stop slave;
+SET GLOBAL slave_parallel_type='LOGICAL_CLOCK';
+SET GLOBAL slave_parallel_workers=8;
+start slave;
+```
 
 
