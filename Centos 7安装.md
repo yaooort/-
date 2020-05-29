@@ -494,3 +494,9 @@ setsebool -P httpd_can_network_connect 1
 
 ### nginx 访问文件权限
 https://blog.csdn.net/onlysunnyboy/article/details/75270533
+
+## 导出数据库
+mysqldump -h 127.0.0.24 -u oort -p database>old.sql
+
+## 导入数据库
+mysql>source old.sql;
