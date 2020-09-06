@@ -183,7 +183,7 @@ vi /usr/libexec/urlgrabber-ext-down
 ```
 ### 安装pipenv
 ```
-pip install pipenv==2020.5.28
+pip install pipenv==2018.11.26
 ```
 ### 遇到错误ERROR: Package 'setuptools' requires a different Python: 2.7.5 not in '>=3.5'
 ```
