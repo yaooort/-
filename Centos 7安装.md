@@ -500,3 +500,93 @@ mysqldump -h 127.0.0.24 -u oort -p database>old.sql
 
 ## 导入数据库
 mysql>source old.sql;
+
+
+
+
+
+
+
+
+
+## nginx根配置文件
+```
+user  nginx;
+worker_processes  auto;
+
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+
+
+events {
+    use epoll; 
+    worker_connections  65535;
+}
+
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    keepalive_timeout  65;
+
+    client_max_body_size   5M;
+
+    upstream backend {
+	    	#server 172.26.132.30:8888;
+		server 127.0.0.1:8888;
+		#server 172.26.72.227:8000;
+		#server 172.26.72.225:8000;
+    }
+
+    #gzip  on;
+
+    include /etc/nginx/conf.d/*.conf;
+}
+```
+### nginx 子配置文件
+```
+# 测试服务
+server {
+    	listen       80;
+    	server_name  www.btbtrip.cn btbtrip.cn;
+#    	rewrite ^(.*)$	https://$host$1	permanent;
+
+    	location / {
+        root   /usr/share/nginx/html;
+        index  index.html index.htm;
+    	}
+}
+
+server {
+	listen       443 ssl;
+    	server_name  www.btbtrip.cn btbtrip.cn;
+	#指定crt格式的证书文件 
+	ssl_certificate      /etc/nginx/ssl/btbtrip.cn_chain.crt; 
+	#指定PEM格式的私钥文件
+	ssl_certificate_key  /etc/nginx/ssl/btbtrip.cn_key.key;
+	#超时时间
+	ssl_session_timeout 5m;
+
+#	location / {
+#    	   proxy_pass http://backend;
+#  	}
+	location / {
+        root   /usr/share/nginx/html;
+        index  index.html index.htm;
+    	}
+}
+
+```
+
+
+
