@@ -593,4 +593,6 @@ server {
 ##### yum-config-manager --add-repo http://download.docker.com/linux/centos/docker-ce.repo（中央仓库）
 ##### yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo（阿里仓库）
 ##### yum install docker-ce-18.03.1.ce
-
+##### systemctl enable docker # 开机自动启动docker
+##### systemctl start docker # 启动docker
+##### systemctl restart docker # 重启dokcer
