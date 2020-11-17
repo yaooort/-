@@ -594,6 +594,8 @@ bind-address = 0.0.0.0
 
 注意：宿主机会把容器 `ip` 地址段当成外网 `ip`。（当前说明是 `centos7` 环境）
 
+## 直接使用命令添加docker地址段也可以 firewall-cmd --permanent --zone=trusted --add-source=172.17.0.0/20
+
 编辑防火墙文件 `/etc/firewalld/zones/public.xml`，添加下面 `docker0` 地址段到配置：
 
 
