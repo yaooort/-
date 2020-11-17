@@ -596,3 +596,54 @@ server {
 ##### systemctl enable docker # 开机自动启动docker
 ##### systemctl start docker # 启动docker
 ##### systemctl restart docker # 重启dokcer
+
+
+### Docker 访问宿主机器mysql redis 解决
+
+首先设置了 `mysql` 的配置文件，保证 `mysql` 可以被任何 `ip` 访问：
+
+
+
+```bash
+[mysqld]
+bind-address = 0.0.0.0
+```
+
+修改完配置文件重启生效。
+ 但为了安全考虑，防火墙的 `3306` 端口仍然是不开放外网访问的。
+
+容器访问宿主机的地址使用 `eth0` 的地址，即宿主机内网 `ip` 地址。
+ 运行 `ipconfig` 命令，查看网络的虚拟网桥相关信息。
+
+注意：宿主机会把容器 `ip` 地址段当成外网 `ip`。（当前说明是 `centos7` 环境）
+
+编辑防火墙文件 `/etc/firewalld/zones/public.xml`，添加下面 `docker0` 地址段到配置：
+
+
+
+```xml
+<rule family="ipv4">
+  <source address="172.18.0.0/16"/>
+  <accept/>
+</rule>
+```
+
+重启防火墙，`docker` 容器即可正常访问宿主机端口。
+
+
+
+```bash
+service firewalld restart
+```
+
+🎨 如果有用到 `docker-compose` 命令，则会自动创建一个名为 `br-"docker network id"` 的虚拟网桥。
+ 🎨 此时同样需要将虚拟网桥地址段配置到防火墙白名单，才能正常访问，添加配置：
+
+
+
+```xml
+<rule family="ipv4">
+  <source address="172.20.0.0/16"/>
+  <accept/>
+</rule>
+```
