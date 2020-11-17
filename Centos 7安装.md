@@ -594,17 +594,26 @@ bind-address = 0.0.0.0
 
 注意：宿主机会把容器 `ip` 地址段当成外网 `ip`。（当前说明是 `centos7` 环境）
 
-## 直接使用命令添加docker地址段也可以 firewall-cmd --permanent --zone=trusted --add-source=172.17.0.0/20
 
 编辑防火墙文件 `/etc/firewalld/zones/public.xml`，添加下面 `docker0` 地址段到配置：
 
 
 
 ```xml
-<rule family="ipv4">
-  <source address="172.18.0.0/16"/>
-  <accept/>
-</rule>
+<?xml version="1.0" encoding="utf-8"?>
+<zone>
+  <short>Public</short>
+  <description>For use in public areas. You do not trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.</description>
+  <service name="ssh"/>
+  <service name="dhcpv6-client"/>
+  <port protocol="tcp" port="80"/>
+  <port protocol="tcp" port="443"/>
+  <rule family="ipv4">
+    <source address="172.17.0.0/20"/>
+    <accept/>
+  </rule>
+</zone>
+
 ```
 
 重启防火墙，`docker` 容器即可正常访问宿主机端口。
@@ -621,8 +630,18 @@ service firewalld restart
 
 
 ```xml
-<rule family="ipv4">
-  <source address="172.20.0.0/16"/>
-  <accept/>
-</rule>
+<?xml version="1.0" encoding="utf-8"?>
+<zone>
+  <short>Public</short>
+  <description>For use in public areas. You do not trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.</description>
+  <service name="ssh"/>
+  <service name="dhcpv6-client"/>
+  <port protocol="tcp" port="80"/>
+  <port protocol="tcp" port="443"/>
+  <rule family="ipv4">
+    <source address="172.17.0.0/20"/>
+    <accept/>
+  </rule>
+</zone>
+
 ```
