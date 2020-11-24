@@ -1,7 +1,11 @@
 ### 安装nginx
 ```
 // 安装yum源
+centos7
 sudo rpm -ivh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+centos8
+sudo rpm -ivh http://nginx.org/packages/centos/8/x86_64/RPMS/nginx-1.18.0-2.el8.ngx.x86_64.rpm
+
 
 
 // 安装nginx
