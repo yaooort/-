@@ -283,11 +283,11 @@ public class ListDomainSort {
 # 使用方式
 ```java
         ArrayList<String> list = new ArrayList<>();
-        list.add("http://www.amns7s.com");
-        list.add("http://www.hd0wcg.com");
-        list.add("http://www.iyuswe.com");
-        list.add("http://www.yueh3s.com");
-        list.add("http://www.mnc0bgd.com");
+        list.add("http://www.baidu.com");
+        list.add("http://www.google.com");
+        list.add("http://www.yulled.com");
+        list.add("http://www.yuhhhs.com");
+        list.add("http://www.cdhtgeg.com");
             ListDomainSort.getSortUtil().startSort(list, 5, false, ListDomainSort.DOMAIN_TYPE, new ListDomainSort.CallHostsDomain() {
                 @Override
                 public void callHostList(List<String> newList) {
